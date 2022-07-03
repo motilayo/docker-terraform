@@ -16,9 +16,9 @@ VOLUME ["/data"]
 WORKDIR /data
 
 ENV TERRAFORM_VERSION=1.1.9
-COPY terraform_${TERRAFORM_VERSION}_linux_amd64.zip /tmp
+COPY terraform_${TERRAFORM_VERSION}_linux_arm64.zip /tmp
 RUN cd /tmp && \
-    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin
+    unzip terraform_${TERRAFORM_VERSION}_linux_arm64.zip -d /usr/bin
 COPY retrieve_tf_provider.sh /tmp
 
 COPY ossutil /usr/bin
@@ -27,7 +27,7 @@ ENV RETRIEVE_TF_PROVIDER=/tmp/retrieve_tf_provider.sh
 
 # default provider
 RUN $RETRIEVE_TF_PROVIDER hashicorp random 3.1.0
-RUN $RETRIEVE_TF_PROVIDER hashicorp alicloud 1.140.0
+# RUN $RETRIEVE_TF_PROVIDER hashicorp alicloud 1.140.0
 
 # additional designated provider
 RUN if [ "${PROVIDERS}" = "" ] ;then \
